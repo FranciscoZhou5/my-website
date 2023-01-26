@@ -1,4 +1,4 @@
-import { extendTheme, keyframes } from "@chakra-ui/react";
+import { ComponentStyleConfig, extendTheme, keyframes } from "@chakra-ui/react";
 
 const fonts = {
   heading: "var(--inter-font)",
@@ -27,20 +27,23 @@ const breakpoints = {
   "2xl": "1536px",
 };
 
+const colors = {
+  primary: "#8093F1",
+
+  "background-primary": "#151515",
+  "background-secundary": "#111111",
+
+  // border: "#3F444E",
+  border: "#202227",
+
+  "text-weak": "#a1a1a1",
+};
+
 export const theme = extendTheme({
   fonts,
   styles,
   breakpoints,
   config,
-  colors: {
-    primary: "#8093F1",
-
-    "background-primary": "#151515",
-    "background-secundary": "#111111",
-
-    // border: "#3F444E",
-    border: "#202227",
-
-    "text-weak": "#a1a1a1",
-  },
+  colors,
+  components: {},
 });

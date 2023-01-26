@@ -3,11 +3,11 @@ import React, { createContext, useState, useEffect, useCallback, useContext } fr
 type ScrollPosition = number;
 
 interface ScrollPositionContextProps {
-  position: ScrollPosition;
+  positionY: ScrollPosition;
 }
 
 const ScrollPositionContext = createContext<ScrollPositionContextProps>({
-  position: 0,
+  positionY: 0,
 });
 
 interface ScrollPositionProviderProps {
@@ -15,17 +15,19 @@ interface ScrollPositionProviderProps {
 }
 
 const ScrollPositionProvider = ({ children }: ScrollPositionProviderProps) => {
-  const [position, setPosition] = useState<ScrollPosition>(0);
+  const [positionY, setPositionY] = useState<ScrollPosition>(0);
+
   const handleScroll = useCallback(() => {
-    setPosition(window.scrollY);
+    setPositionY(window.scrollY);
   }, []);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  return <ScrollPositionContext.Provider value={{ position }}>{children}</ScrollPositionContext.Provider>;
+  return <ScrollPositionContext.Provider value={{ positionY }}>{children}</ScrollPositionContext.Provider>;
 };
 
 function useScrollPositionContext() {
