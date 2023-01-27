@@ -23,15 +23,16 @@ import {
 import NextImage from "next/image";
 import Link from "next/link";
 
-import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
 import Header from "../components/Header";
 import { AiFillGithub, AiOutlineInstagram } from "react-icons/ai";
 import { BsChevronDown } from "react-icons/bs";
-import BottomSlideFadeIn from "../components/animations/BottomSlideFadeIn";
 import ScrollToTop from "../components/ScrollToTop";
 import { useRef } from "react";
 
 export default function Home() {
+  const initialSectionRef = useRef<HTMLDivElement>(null);
+  const aboutMeSectionRef = useRef<HTMLDivElement>(null);
+
   const socialMedias = [
     { Icon: AiFillGithub, label: "Github", url: "https://github.com/FranciscoZhou5" },
     { Icon: AiOutlineInstagram, label: "Instagram", url: "https://www.instagram.com/franciscozhou5/" },
@@ -47,21 +48,19 @@ export default function Home() {
 
   const skills = [
     { name: "Typescript", value: 94 },
-    // { name: "Javascript", value: 92 },
-    // { name: "React", value: 93 },
-    // { name: "Node.js", value: 81 },
     { name: "React", value: 92 },
     { name: "Figma", value: 82 },
     { name: "NodeJs", value: 87 },
   ];
 
-  const initialSectionRef = useRef<HTMLDivElement>(null);
-  const aboutMeSectionRef = useRef<HTMLDivElement>(null);
-
   const pageSections = [
     { section: "Initial", label: "Início", ref: initialSectionRef },
     { section: "AboutMe", label: "Sobre mim", ref: aboutMeSectionRef },
   ];
+
+  function scrollToAboutMeSection() {
+    aboutMeSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
 
   return (
     <Box w="full" h="100vh">
@@ -85,33 +84,11 @@ export default function Home() {
         h={{ sm: "550px", md: "600px", lg: "750px" }}
       >
         <Box mb={{ sm: "16", lg: "80px" }}>
-          {/* <BottomSlideFadeIn>
-            <Heading size="md" color="primary" mb="2">
-              Francisco Zhou
-            </Heading>
-          </BottomSlideFadeIn>
-          <BottomSlideFadeIn>
-            <Heading textAlign="center" fontWeight="medium" size={{ sm: "xl", md: "2xl", lg: "4xl" }} mx={{ sm: "0", md: "4" }}>
-              Designer & Developer
-            </Heading>
-          </BottomSlideFadeIn>
-
-          <BottomSlideFadeIn>
-            <Text mt={{ sm: "0", md: "4" }} fontSize={{ sm: "medium", md: "large" }} color="#a1a1a1">
-              Full-stack developer and UI/UX designer
-            </Text>
-          </BottomSlideFadeIn> */}
           <Heading size="md" color="primary" mb="2">
             Francisco Zhou
           </Heading>
 
-          <Heading
-            textAlign="center"
-            fontWeight="medium"
-            fontSize={{ sm: "28px", md: "48px", lg: "72px" }}
-            // size={{ sm: "md", md: "2xl", lg: "4xl" }}
-            mx={{ sm: "0", md: "4" }}
-          >
+          <Heading textAlign="center" fontWeight="medium" fontSize={{ sm: "28px", md: "48px", lg: "72px" }} mx={{ sm: "0", md: "4" }}>
             Designer & Developer
           </Heading>
 
@@ -121,11 +98,15 @@ export default function Home() {
         </Box>
 
         <Box>
-          <ScrollLink to="aboutme" smooth offset={-70}>
-            <Button _hover={{ bgColor: "primary" }} borderColor="border" variant="outline" rightIcon={<BsChevronDown />}>
-              Saiba mais
-            </Button>
-          </ScrollLink>
+          <Button
+            onClick={scrollToAboutMeSection}
+            _hover={{ bgColor: "primary" }}
+            borderColor="border"
+            variant="outline"
+            rightIcon={<BsChevronDown />}
+          >
+            Saiba mais
+          </Button>
         </Box>
 
         <HStack spacing="4" pos="absolute" bottom="80px" left="50%" transform="translateX(-50%)">

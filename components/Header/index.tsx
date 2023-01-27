@@ -1,6 +1,6 @@
 import { Box, Flex, Heading, IconButton, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { MutableRefObject } from "react";
+import { MutableRefObject, useCallback } from "react";
 import { animateScroll as scroll } from "react-scroll";
 
 import { HiMenuAlt1 } from "react-icons/hi";
@@ -14,6 +14,10 @@ interface HeaderProps {
 }
 
 export default function Header(props: HeaderProps) {
+  const scrollTo = useCallback((ref: MutableRefObject<HTMLDivElement | null>) => {
+    ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+
   return (
     <Flex
       h="16"
@@ -35,11 +39,7 @@ export default function Header(props: HeaderProps) {
               bg="background-secundary"
               _hover={{ textColor: "text-weak", bg: "background-primary" }}
               onClick={() => {
-                if (ref.current) {
-                  console.log(ref.current.offsetTop);
-                  scroll.scrollTo(ref.current.offsetTop - 50);
-                  // ref.current.scrollIntoView({ block: "center" });
-                }
+                ref.current?.scrollIntoView({});
               }}
             >
               {label}
